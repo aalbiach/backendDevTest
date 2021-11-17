@@ -5,6 +5,9 @@ logging:
 feign:
   client:
     config:
+      default:
+        connect-timeout: 1000 # 10000
+        read-timeout: 500 # 60000
       product-service:
         logger-level: FULL # NONE, BASIC, HEADERS, FULL
   compression:
