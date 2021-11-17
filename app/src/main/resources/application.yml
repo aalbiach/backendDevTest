@@ -1,0 +1,29 @@
+logging:
+  level:
+    com.devtest.productapi: INFO
+
+feign:
+  client:
+    config:
+      product-service:
+        logger-level: FULL # NONE, BASIC, HEADERS, FULL
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+      useGzipDecoder: true
+
+client:
+  product-service:
+    url: http://localhost:3001
+
+server:
+  port: 5000
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+  error:
+    whitelabel:
+      enabled: false
