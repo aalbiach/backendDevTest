@@ -10,7 +10,8 @@ import java.util.List;
 
 @FeignClient(
         value = "product-service",
-        url = "${client.product-service.url}")
+        url = "${client.product-service.url}",
+        fallback = ProductServiceClientFallback.class)
 public interface ProductServiceClient {
 
     @GetMapping(

@@ -1,15 +1,17 @@
 logging:
   level:
     com.devtest.productapi: INFO
+    feign.Logger: OFF
 
 feign:
   client:
     config:
-      default:
-        connect-timeout: 1000 # 10000
-        read-timeout: 500 # 60000
       product-service:
+        connect-timeout: 5000 # 10000
+        read-timeout: 2000 # 60000
         logger-level: FULL # NONE, BASIC, HEADERS, FULL
+  circuitbreaker:
+    enabled: true
   compression:
     request:
       enabled: true
