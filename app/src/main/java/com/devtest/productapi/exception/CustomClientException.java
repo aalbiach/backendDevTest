@@ -1,6 +1,6 @@
 package com.devtest.productapi.exception;
 
-public class CustomClientException extends RuntimeException {
+public abstract class CustomClientException extends RuntimeException {
 
     private final int status;
     private final String url;

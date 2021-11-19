@@ -1,6 +1,6 @@
 package com.devtest.productapi.service.impl
 
-import com.devtest.productapi.client.ProductServiceClient
+import com.devtest.productapi.client.ProductServiceFeign
 import com.devtest.productapi.domain.Product
 import com.devtest.productapi.util.BaseSpecification
 
@@ -8,7 +8,7 @@ import java.util.stream.Collectors
 
 class SimilarProductsServiceImplTest extends BaseSpecification {
 
-    private client = Mock(ProductServiceClient)
+    private client = Mock(ProductServiceFeign)
     private service = new SimilarProductsServiceImpl(client)
 
     def "should return a similar products for the productId"() {

@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ProductServiceClientIT extends BaseSpecification {
+class ProductServiceFeignIT extends BaseSpecification {
 
     @Autowired
-    private ProductServiceClient client
+    private ProductServiceFeign client
 
     def "should return a similar product ids when product exists"() {
         given:

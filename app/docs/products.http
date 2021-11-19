@@ -1,0 +1,17 @@
+### Normal
+GET http://localhost:5000/product/1/similar
+
+### Slow
+GET http://localhost:5000/product/2/similar
+
+### Very Slow
+GET http://localhost:5000/product/3/similar
+
+### Not Found
+GET http://localhost:5000/product/4/similar
+
+### Error
+GET http://localhost:5000/product/5/similar
+
+### Error 2
+GET http://localhost:5000/product/6/similar

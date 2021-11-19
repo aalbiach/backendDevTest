@@ -11,8 +11,8 @@ import java.util.List;
 @FeignClient(
         value = "product-service",
         url = "${client.product-service.url}",
-        fallback = ProductServiceClientFallback.class)
-public interface ProductServiceClient {
+        fallback = ProductServiceFeignFallback.class)
+public interface ProductServiceFeign {
 
     @GetMapping(
             value = "/product/{productId}/similarids",

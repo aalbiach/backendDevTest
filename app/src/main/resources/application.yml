@@ -1,27 +1,9 @@
 logging:
   level:
     com.devtest.productapi: INFO
-    feign.Logger: OFF
-
-feign:
-  client:
-    config:
-      product-service:
-        connect-timeout: 5000 # 10000
-        read-timeout: 2000 # 60000
-        logger-level: FULL # NONE, BASIC, HEADERS, FULL
-  circuitbreaker:
-    enabled: true
-  compression:
-    request:
-      enabled: true
-    response:
-      enabled: true
-      useGzipDecoder: true
-
-client:
-  product-service:
-    url: http://localhost:3001
+    feign.Logger: DEBUG
+    org.springframework.cloud.circuitbreaker.resilience4j: DEBUG
+    io.github.resilience4j: DEBUG
 
 server:
   port: 5000
@@ -32,3 +14,49 @@ server:
   error:
     whitelabel:
       enabled: false
+
+client:
+  product-service:
+    url: http://localhost:3001
+
+feign:
+  client:
+    config:
+      product-service:
+        connect-timeout: 5000 # 10000
+        read-timeout: 3500 # 60000
+        logger-level: NONE # NONE, BASIC, HEADERS, FULL
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+      useGzipDecoder: true
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      waitDurationInOpenState: PT3s
+#      maxWaitDurationInHalfOpenState: PT0s
+      failureRateThreshold: 50
+      slowCallRateThreshold: 65
+      slowCallDurationThreshold: PT2s
+      permittedNumberOfCallsInHalfOpenState: 5
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 20
+      minimumNumberOfCalls: 20
+
+resilience4j.retry:
+  configs:
+    default:
+      maxAttempts: 1
+      waitDuration: PT0s
+      enableExponentialBackoff: false
+      exponentialBackoffMultiplier: 2
+
+resilience4j.ratelimiter:
+  configs:
+    default:
+      limitForPeriod: 10
+      limitRefreshPeriod: PT1s
+      timeoutDuration: PT3s

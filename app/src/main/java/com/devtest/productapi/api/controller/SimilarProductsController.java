@@ -19,7 +19,12 @@ public class SimilarProductsController {
     @GetMapping("/product/{productId}/similar")
     public ResponseEntity<SimilarProductsResponse> retrieveSimilarProducts(@PathVariable String productId) {
         log.info("Retrieving similar products for ProductId='{}'", productId);
-        return ResponseEntity.ok(new SimilarProductsResponse(similarProductsService.retrieveSimilarProducts(productId)));
+
+        final var products = similarProductsService.retrieveSimilarProducts(productId);
+
+        log.info("Successfully retrieved similar products for ProductId='{}'. TotalProducts='{}'", productId, products.size());
+
+        return ResponseEntity.ok(new SimilarProductsResponse(products));
     }
 
 }

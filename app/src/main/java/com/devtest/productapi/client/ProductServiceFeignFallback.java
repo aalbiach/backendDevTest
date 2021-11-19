@@ -8,7 +8,7 @@ import java.util.List;
 
 @Component
 @Log4j2
-public class ProductServiceClientFallback implements ProductServiceClient {
+public class ProductServiceFeignFallback implements ProductServiceFeign {
 
     @Override
     public List<String> retrieveSimilarProductIds(String productId) {

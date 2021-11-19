@@ -1,7 +1,6 @@
 package com.devtest.productapi.config.feign;
 
 import feign.Logger;
-import feign.Retryer;
 import feign.codec.ErrorDecoder;
 import feign.slf4j.Slf4jLogger;
 import org.springframework.context.annotation.Bean;
@@ -16,12 +15,8 @@ public class FeignClientConfig {
     }
 
     @Bean
-    public Retryer customRetryer() {
-        return new CustomRetryer();
-    }
-
-    @Bean
     public Logger customLogger() {
         return new Slf4jLogger();
     }
+
 }
