@@ -1,15 +1,16 @@
 package com.devtest.productapi.client
 
 import com.devtest.productapi.client.payload.response.ProductDto
-import com.devtest.productapi.util.BaseSpecification
+import com.devtest.productapi.service.client.ProductServiceFeignService
+import com.devtest.productapi.util.SimuladoSpecification
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ProductServiceFeignIT extends BaseSpecification {
+class ProductServiceFeignIT extends SimuladoSpecification {
 
     @Autowired
-    private ProductServiceFeign client
+    private ProductServiceFeignService client
 
     def "should return a similar product ids when product exists"() {
         given:
@@ -46,7 +47,7 @@ class ProductServiceFeignIT extends BaseSpecification {
         then:
         with(result) {
             it instanceof ProductDto
-            !id.empty
+            id == productId
             !name.empty
             !price.naN
             price > 0
@@ -79,7 +80,25 @@ class ProductServiceFeignIT extends BaseSpecification {
         result == null
     }
 
-    def "should fallback slow calls"(String productId) {
+    def "should return a product when call is slow"() {
+        given:
+        def productId = "100"
+
+        when:
+        def result = client.retrieveProduct(productId)
+
+        then:
+        with(result) {
+            it instanceof ProductDto
+            id == productId
+            !name.empty
+            !price.naN
+            price > 0
+            availability != null
+        }
+    }
+
+    def "should fallback very slow calls"(String productId) {
         when:
         def result = client.retrieveProduct(productId)
 
@@ -87,6 +106,6 @@ class ProductServiceFeignIT extends BaseSpecification {
         result == null
 
         where:
-        productId << ["100", "1000", "10000"]
+        productId << ["1000", "10000"]
     }
 }

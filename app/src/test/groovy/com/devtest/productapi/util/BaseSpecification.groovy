@@ -5,6 +5,8 @@ import org.jeasy.random.EasyRandom
 import spock.lang.Shared
 import spock.lang.Specification
 
+import java.util.concurrent.ThreadLocalRandom
+
 abstract class BaseSpecification extends Specification {
 
     @Shared
@@ -14,8 +16,8 @@ abstract class BaseSpecification extends Specification {
         return random.nextObject(String.class)
     }
 
-    protected int randomInt(int min, int max) {
-        return random.nextInt(min, max)
+    protected static int randomInt(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max + 1)
     }
 
     protected ProductDto randomProductDto() {

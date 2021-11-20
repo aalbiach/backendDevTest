@@ -1,15 +1,15 @@
 package com.devtest.productapi.service.impl
 
-import com.devtest.productapi.client.ProductServiceFeign
 import com.devtest.productapi.domain.Product
+import com.devtest.productapi.service.client.ProductServiceFeignService
 import com.devtest.productapi.util.BaseSpecification
 
 import java.util.stream.Collectors
 
 class SimilarProductsServiceImplTest extends BaseSpecification {
 
-    private client = Mock(ProductServiceFeign)
-    private service = new SimilarProductsServiceImpl(client)
+    private feignService = Mock(ProductServiceFeignService)
+    private service = new SimilarProductsServiceImpl(feignService)
 
     def "should return a similar products for the productId"() {
         given:
@@ -26,8 +26,8 @@ class SimilarProductsServiceImplTest extends BaseSpecification {
         }
 
         interaction {
-            1 * client.retrieveSimilarProductIds(productId) >> similarProductsIds
-            similarProductsIds.size() * client.retrieveProduct(_ as String) >> { String id -> randomProductDto(id) }
+            1 * feignService.retrieveSimilarProductIds(productId) >> similarProductsIds
+            similarProductsIds.size() * feignService.retrieveProduct(_ as String) >> { String id -> randomProductDto(id) }
         }
     }
 
@@ -46,8 +46,8 @@ class SimilarProductsServiceImplTest extends BaseSpecification {
         }
 
         interaction {
-            1 * client.retrieveSimilarProductIds(productId) >> similarProductsIds
-            0 * client.retrieveProduct(_)
+            1 * feignService.retrieveSimilarProductIds(productId) >> similarProductsIds
+            0 * feignService.retrieveProduct(_)
         }
     }
 
